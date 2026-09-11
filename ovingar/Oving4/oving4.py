@@ -11,6 +11,8 @@ lengdegrader = [-3.2, -2.6, 0, 5.3, 10.8]
 df = pd.DataFrame({"by": byer, "lengdegrad": lengdegrader})
 #print the dataframe
 df["tidsforskjell"] = (df["lengdegrad"]*4).round().astype(int)
+#print as table
+print(df)
 
 
 ##
@@ -49,9 +51,8 @@ plt.plot(t, last_dogn["Consumption"])
 plt.xlabel("Tid")
 plt.ylabel("Konsum (kWh)")
 plt.title("Forbruk dato: " + str(last_dogn.index.date[0]))
-
 #save image
-plt.savefig("elk320/elk330/ovingar/Oving4/forbruk_dato.png")
+plt.savefig("elk320/elk330/ovingar/Oving4/figurer/forbruk_dato.png")
 
 #Oppgåve 7
 load_data["netto"] =(
@@ -82,8 +83,7 @@ plt.xlabel("Tid")
 plt.ylabel("Konsum (kWh) / Produksjon (kWh)")
 plt.title("Forbruk og produksjon")
 plt.grid(True)
-plt.show()
-
+plt.savefig("elk320/elk330/ovingar/Oving4/figurer/forbruk_produksjon.png")
 load_data.plot(
     y = ["Consumption", "Production", "netto"],
     figsize=(10, 5)
@@ -92,4 +92,4 @@ plt.xlabel("Tid")
 plt.ylabel("Konsum (kWh) / Produksjon (kWh) / Netto (kWh)")
 plt.title("Forbruk og produksjon")
 plt.grid(True)
-plt.show()
+plt.savefig("elk320/elk330/ovingar/Oving4/figurer/forbruk_produksjon_netto.png")
