@@ -1,4 +1,4 @@
-
+from tabulate import tabulate
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -10,9 +10,9 @@ lengdegrader = [-3.2, -2.6, 0, 5.3, 10.8]
 #make a dataframe
 df = pd.DataFrame({"by": byer, "lengdegrad": lengdegrader})
 #print the dataframe
-df["tidsforskjell"] = (df["lengdegrad"]*4).round().astype(int)
+df["tidsforskjell(Min)"] = (df["lengdegrad"]*4).round().astype(int)
 #print as table
-print(df)
+print(tabulate(df, headers = 'keys', tablefmt = 'psql'))
 
 
 ##
