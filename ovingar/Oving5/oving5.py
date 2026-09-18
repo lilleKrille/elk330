@@ -27,9 +27,9 @@ for i in range(len(mu)):
     ax = axs[row, col]
     for j in range(len(mu)):
         ax.plot(t, l_0[j] + gauss_curve(t, a[j], mu[i], sigma[j]))
-    ax.set_title(f"mu = {mu[i]}, sigma = {sigma[i]}")
+    ax.set_title(f"mu = {mu[i]}, sigma = {sigma[i]},\n A = {a[i]}, l_0 = {l_0[i]}")
     ax.set_xlabel("t")
-    ax.set_ylabel("l_0")
+    ax.set_ylabel("A_i")
 
 plt.tight_layout()
 plt.savefig("elk320/elk330/ovingar/Oving5/figurer/gauss_curve.png")
