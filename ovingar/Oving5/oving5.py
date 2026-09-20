@@ -26,10 +26,11 @@ for i in range(len(mu)):
     row, col = divmod(i, 2)
     ax = axs[row, col]
     for j in range(len(mu)):
-        ax.plot(t, l_0[j] + gauss_curve(t, a[j], mu[i], sigma[j]))
+        ax.plot(t, l_0[i] + gauss_curve(t, a[j], mu[i], sigma[j]))
     ax.set_title(f"mu = {mu[i]}, sigma = {sigma[i]},\n A = {a[i]}, l_0 = {l_0[i]}")
     ax.set_xlabel("t")
     ax.set_ylabel("A_i")
+    ax.set_ylim(0, 320)
 
 plt.tight_layout()
 plt.savefig("elk320/elk330/ovingar/Oving5/figurer/gauss_curve.png")
@@ -65,14 +66,28 @@ modell_natt = gauss_curve(t,
         2
 )
 modell_samla = base_load + modell_morgen + modell_kveld + modell_natt
-print(dayload["Consumption"].iloc[peaks])
-#plot in a new figure
-plt.figure()
-plt.scatter(dayload.index.hour, dayload["Consumption"], color="black")
-plt.plot(t, modell_samla, linewidth=3)
-plt.plot(t, base_load + modell_morgen, linestyle="--")
-plt.plot(t, base_load + modell_kveld, linestyle="--")
-plt.plot(t, base_load + modell_natt, linestyle="--")
-plt.legend(["Datapunkt ""Total modell", "Morgen", "Kveld", "Natt"])
+
+#print all paramater values for the models as a table
+print(f"Modell_Morgen. a: {(dayload["Consumption"].iloc[peaks[0]]-base_load).round(2)}, mu: {dayload.iloc[peaks[0]].name.hour}, sigma: {2}")
+print(f"Modell_Kveld. a: {(dayload["Consumption"].iloc[peaks[1]]-base_load).round(2)}, mu: {dayload.iloc[peaks[1]].name.hour}, sigma: {3}")
+print(f"Modell_Natt. a: {(dayload["Consumption"].iloc[peaks[2]]-base_load).round(2)}, mu: {dayload.iloc[peaks[2]].name.hour}, sigma: {2}")
+
+#plot in 3 subplots. Observed data, modelled curve, the combined
+# observed data, modelled curve, the combined
+fig, axs = plt.subplots(3, 1, sharex=True)
+
+axs[0].plot(dayload.index.hour, dayload["Consumption"], color="black")
+axs[0].set_title("Døgnlast data")
+
+axs[1].plot(t, modell_samla, linewidth=3)
+axs[1].set_title("Gaussmodell for døgnlast")
+
+axs[2].plot(t, modell_samla, linewidth=3)
+axs[2].scatter(dayload.index.hour, dayload["Consumption"], color="black")
+axs[2].plot(t, base_load + modell_morgen, linestyle="--")
+axs[2].plot(t, base_load + modell_kveld, linestyle="--")
+axs[2].plot(t, base_load + modell_natt, linestyle="--")
+#axs[2].legend(["Datapunkt ","Total modell", "Morgen", "Ettermiddag", "Kveld"])
+axs[2].set_title("Gaussmodell for døgnlast")
 plt.savefig("elk320/elk330/ovingar/Oving5/figurer/gaussmodell.png")
 plt.show()
